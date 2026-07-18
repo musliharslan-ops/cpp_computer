@@ -20,20 +20,5 @@ typedef struct dinstr_t{
 	//rd_valid;
 	//rd_idx;
 	//imm;
-}
-
-typedef struct packed{
-	bool valid;
-	int32_t data;
-	int idx;
-} mem_res_t;
-
-typedef struct packed{
-	bool valid;
-	int32_t addr;
-	int32_t data;
-	int idx;
-	bool is_write;
-} mem_req_t;
-
+};
 #endif
