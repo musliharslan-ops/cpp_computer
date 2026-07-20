@@ -2,16 +2,17 @@
 #define CORE_SC_H
 
 #include <string>
+#include "fetch.h"
 
 class Core_sc{
 public:
-	
-	Core_sc(std::string name){
+	fetch fir;
+  	Core_sc(){
 
 	}
 
 	void ff(){
-
+fir.ff();
 	}
 
 	void comb(){
