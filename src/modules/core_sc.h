@@ -9,12 +9,14 @@ class Core_sc{
 public:
 	fetch fet;
     decode dec;
+	uint64_t r [32];
   	Core_sc(){
 
 	}
 
 	void ff(){
 fet.comb();
+fet.ff();
 dec.comb(fet.comd);
 	}
 
