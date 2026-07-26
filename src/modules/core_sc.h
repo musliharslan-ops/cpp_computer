@@ -3,16 +3,19 @@
 
 #include <string>
 #include "fetch.h"
+#include "decode.h"
 
 class Core_sc{
 public:
-	fetch fir;
+	fetch fet;
+    decode dec;
   	Core_sc(){
 
 	}
 
 	void ff(){
-fir.ff();
+fet.comb();
+dec.comb(fet.comd);
 	}
 
 	void comb(){
