@@ -5,20 +5,20 @@
 #include <fstream>
 #include <cstdint>
 using namespace std;
+extern uint64_t pc;
 class fetch{
 public:
     uint32_t comd;
     ifstream ins_mem;
-    uint32_t clock=0x00000000;
 
     fetch() : ins_mem("imem.mem") 
     {}
 
     void ff() {
-        clock++;    
+        pc+=4;    
     }
 	void comb(){
- 		for(int i=0;i<=clock;i++){
+ 		for(int i=0;i<=pc;i+=4){
             ins_mem>>hex>>comd;
         }
 	}

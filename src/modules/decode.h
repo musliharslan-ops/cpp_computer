@@ -6,17 +6,17 @@
 #include <cstdint>
 #include "fetch.h"
 using namespace std;
+extern uint8_t rd;
+extern uint32_t imm;
+extern uint8_t fun;
+extern uint8_t rs1;
+extern uint8_t rs2;
 class decode{
 public:
     uint32_t comd;
-    uint32_t imm;
     uint8_t opcode;
-    uint8_t rd;
     uint8_t funct3;
-    uint8_t rs1;
-    uint8_t rs2;
     uint8_t funct7;
-    uint8_t fun;
 	void ff(){
  		
 	}
@@ -36,20 +36,19 @@ public:
     case 0x13:
     case 0x3:
     case 0x67:
-    case 0x73:
         imm=(comd>>20)&0xFFF;
         break;
     case 0x23:
         imm=(comd>>7)&0x1F|(comd>>20)&0xFE0;
         break;
     case 0x63:
-        imm=((comd >> 19) & 0x1000) | ((comd << 4)  & 0x800) | ((comd >> 20) & 0x7E0) | ((comd >> 7)  & 0x1E);
+        imm=((comd>>19)&0x1000)|((comd<<3)&0x800)|((comd>>20)&0x7E0)| ((comd >> 7)  & 0x1E);
         break;
     case 0x37:
     case 0x17:
-        imm=(comd >> 12) & 0xFFFFF;
+        imm=comd &0xFFFFF000;
         break;
-    case 0xF:
+    case 0x6F:
         imm=(comd >> 11) & 0x100000 | comd & 0xFF000 | (comd >> 9)  & 0x800 | (comd >> 20) & 0x7FE;   
         break;
     }
@@ -205,26 +204,9 @@ public:
             break;
         } 
         break;
-        case 0xF:
-        if(comd!=0x8330000F||comd!=0x0100000F){
-            fun=37;
-        }
+        case 0x00000000:
+        fun=37;
         break;
-        default:
-        switch(comd){
-            case 0x1330000F:
-            fun=38;
-            break;
-            case 0x0100000F:
-            fun=39;
-            break;
-            case 0x00000073:
-            fun=40;
-            break;
-            case 0x00100073:
-            fun=41;
-            break;
-        }
     }
     }
     
