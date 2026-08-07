@@ -1,0 +1,52 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+#define BESMELE "Her hayrın başıdır. Biz dahi başlarken onunla başlarız."
+#define LUI 0
+#define AUIPC 1
+#define JAL 2
+#define JALR 3
+#define BEQ 4
+#define BNE 5
+#define BLT 6
+#define BGE 7
+#define BLTU 8
+#define BGEU 9
+#define LB 10
+#define LH 11
+#define LW 12
+#define LBU 13
+#define LHU 14
+#define SB 15
+#define SH 16
+#define SW 17
+#define ADDI 18
+#define SLTI 19
+#define SLTIU 20
+#define XORI 21
+#define ORI 22
+#define ANDI 23
+#define SLLI 24
+#define SRLI 25
+#define SRAI 26
+#define ADD 27
+#define SUB 28
+#define SLL 29
+#define SLT 30
+#define SLTU 31
+#define XOR 32
+#define SRL 33
+#define SRA 34
+#define OR 35
+#define AND 36
+#define HALT 37
+#define simm12_64 static_cast<int64_t>((imm^(1u<<11))-(1u<<11))
+#define simm32_64 static_cast<int64_t>(imm)
+#define simm21_64 static_cast<int64_t>((imm^(1u<<20))-(1u<<20))
+#define simm13_64 static_cast<int64_t>((imm^(1u<<12))-(1u<<12))
+#define uimm32_64 static_cast<uint64_t>(imm)
+#define sregrs1_64 static_cast<int64_t>(reg[rs1])
+#define sregrs2_64 static_cast<int64_t>(reg[rs2])
+#define sregrs2_8 static_cast<int8_t>(reg[rs2])
+#define sregrs2_16 static_cast<int16_t>(reg[rs2])
+#define sregrs2_32 static_cast<int32_t>(reg[rs2])
+#endif

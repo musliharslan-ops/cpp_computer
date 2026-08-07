@@ -2,9 +2,9 @@
 #define DECODE_H
 
 #include <iostream>
-#include <fstream>
 #include <cstdint>
 #include "fetch.h"
+#include "defines.h"
 using namespace std;
 extern uint8_t rd;
 extern uint32_t imm;
@@ -54,104 +54,104 @@ public:
     }
     switch(opcode){
         case 0x37:
-        fun=0;
+        fun=LUI;
         break;
         case 0x17:
-        fun=1;
+        fun=AUIPC;
         break;
         case 0x6F:
-        fun=2;
+        fun=JAL;
         break;
         case 0x67:
         if(funct3==0){
-        fun=3;}
+        fun=JALR;}
         break;
         case 0x63:
         switch(funct3){
             case 0:
-            fun=4;
+            fun=BEQ;
             break;
             case 1:
-            fun=5;
+            fun=BNE;
             break;
             case 4:
-            fun=6;
+            fun=BLT;
             break;
             case 5:
-            fun=7;
+            fun=BGE;
             break;
             case 6:
-            fun=8;
+            fun=BLTU;
             break;
             case 7:
-            fun=9;
+            fun=BGEU;
             break;
         }
         break;
         case 0x3:
         switch(funct3){
             case 0:
-            fun=10;
+            fun=LB;
             break;
             case 1:
-            fun=11;
+            fun=LH;
             break;
             case 2:
-            fun=12;
+            fun=LW;
             break;
             case 4:
-            fun=13;
+            fun=LBU;
             break;
             case 5:
-            fun=14;
+            fun=LHU;
             break;
         }
         break;
         case 0x23:
         switch(funct3){
             case 0:
-            fun=15;
+            fun=SB;
             break;
             case 1:
-            fun=16;
+            fun=SH;
             break;
             case 2:
-            fun=17;
+            fun=SW;
             break;
         }
         break;
         case 0x13:
         switch(funct3){
             case 0:
-            fun=18;
+            fun=ADDI;
             break;
             case 2:
-            fun=19;
+            fun=SLTI;
             break;
             case 3:
-            fun=20;
+            fun=SLTIU;
             break;
             case 4:
-            fun=21;
+            fun=XORI;
             break;
             case 6:
-            fun=22;
+            fun=ORI;
             break;
             case 7:
-            fun=23;
+            fun=ANDI;
             break;
             case 1:
             if(funct7==0x0){
-                fun=24;
+                fun=SLLI;
             }
             break;
             case 5:
             switch(funct7){
                 case 0:
-                fun=25;
+                fun=SRLI;
                 break;
                 case 0x20:
-                fun=26;
+                fun=SRAI;
                 break;
             }
             break;
@@ -162,50 +162,52 @@ public:
             case 0:
             switch(funct7){
                 case 0x0:
-                fun=27;
+                fun=ADD;
                 break;
                 case 0x20:
-                fun=28;
+                fun=SUB;
                 break;
             }
             break;
             case 1:
             if(funct7==0){
-            fun=29;}
+            fun=SLL;}
             break;
             case 2:
             if(funct7==0){
-            fun=30;}
+            fun=SLT;}
             break;
             case 3:
             if(funct7==0){
-            fun=31;}
+            fun=SLTU;}
             break;
             case 4:
             if(funct7==0){
-            fun=32;}
+            fun=XOR;}
             break;
             case 5:
             switch(funct7){
                 case 0x0:
-                fun=33;
+                fun=SRL;
                 break;
                 case 0x20:
-                fun=34;
+                fun=SRA;
                 break;
             }
             case 6:
             if(funct7==0){
-            fun=35;}
+            fun=OR;}
             break;
             case 7:
             if(funct7==0){
-            fun=36;}
+            fun=AND;}
             break;
         } 
         break;
-        case 0x00000000:
-        fun=37;
+        default:
+        if(comd==0x00000000){
+            fun=HALT;
+        }
         break;
     }
     }
