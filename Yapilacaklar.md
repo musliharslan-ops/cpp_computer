@@ -4,3 +4,9 @@ Yapılacaklar:
 [X] register file yapısı hazırlanacak 32 adet 64 bitlik register (muhtemelen uint64_t)  //uint64_t register [32];
 [X] decode edilmiş komutlar execute edilecek
 [X] registerlara yazılacak
+
+Multicycle:
+[ ] Multicycle Mimariye karar verilecek (Şema çizilecek ya da hazır alınacak)
+[ ] Yeni modüller eklenecek (register file, memory vb.)
+[ ] Yapılacaklar listesi hazırlanacak
+[ ] Test altyapısı geliştirilecek
