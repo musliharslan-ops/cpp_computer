@@ -49,4 +49,7 @@
 #define sregrs2_8 static_cast<int8_t>(reg[rs2])
 #define sregrs2_16 static_cast<int16_t>(reg[rs2])
 #define sregrs2_32 static_cast<int32_t>(reg[rs2])
+#define erd static_cast<int>(rd)
+#define ers1 static_cast<int>(rs1)
+#define ers2 static_cast<int>(rs2)
 #endif
