@@ -1,13 +1,13 @@
 #include <iostream>
-#include "core_sc.h"
+#include "../modules/mc/core_mc.h"
 
 using namespace std;
 extern bool run;
 int main(){
-    Core_sc sc;
+    Core_mc mc;
     while(run){
-    sc.comb();
-    sc.ff();
+    mc.comb();
+    mc.ff();
     }
     
 
