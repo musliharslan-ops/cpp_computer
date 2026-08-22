@@ -26,12 +26,12 @@ public:
             case BGE:
             case BLTU:
             case BGEU:
-            break;
+                break;
             case SB:
             case SH:
             case SW:
-            memo[RD1W+simm12_64]=memcW;
-            break;
+                memo[RD1W+simm12_64]=memcW;
+                break;
             default:
             reg[rdW]=resultW;
             break;
