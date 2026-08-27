@@ -7,12 +7,13 @@ CORE_SRCS := src/sim/main.cpp
 APP      := $(BUILD)/software_sim
 
 .PHONY: all test app clean
-all: $(BUILD) 
+all: build 
 	./$(APP)
 
-$(BUILD): $(CORE_SRCS) src/modules/* src/types/*
+build: $(CORE_SRCS) src/modules/mc/*
 	@mkdir -p $(BUILD)
 	$(CXX) $(CORE_SRCS) $(CXXFLAGS) -o $(APP)
+	cp src/imem.mem build/
 
 app: $(APP)
 

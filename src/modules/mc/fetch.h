@@ -26,6 +26,7 @@ public:
 	void comb(){
  		for(int i=0;i<PCF;i+=4){
             ins_mem>>hex>>comd;
+            cout << pc << ": " << std::hex << comd << endl;
         }
         pcplus4F=PCF+4;
 	}

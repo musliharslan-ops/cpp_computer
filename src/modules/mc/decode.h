@@ -105,73 +105,163 @@ public:
             case 7:
             funD=BGEU;
             break;
+
         }
-        break;
-        case 0x3:
-        switch(funct3){
-            case 0:
-            funD=LB;
+        switch(opcode){
+            case 0x37:
+            funD=LUI;
             break;
-            case 1:
-            funD=LH;
+            case 0x17:
+            funD=AUIPC;
             break;
-            case 2:
-            funD=LW;
+            case 0x6F:
+            funD=JAL;
             break;
-            case 4:
-            funD=LBU;
+            case 0x67:
+            if(funct3==0){
+            funD=JALR;}
             break;
-            case 5:
-            funD=LHU;
-            break;
-        }
-        break;
-        case 0x23:
-        switch(funct3){
-            case 0:
-            funD=SB;
-            break;
-            case 1:
-            funD=SH;
-            break;
-            case 2:
-            funD=SW;
-            break;
-        }
-        break;
-        case 0x13:
-        switch(funct3){
-            case 0:
-            funD=ADDI;
-            break;
-            case 2:
-            funD=SLTI;
-            break;
-            case 3:
-            funD=SLTIU;
-            break;
-            case 4:
-            funD=XORI;
-            break;
-            case 6:
-            funD=ORI;
-            break;
-            case 7:
-            funD=ANDI;
-            break;
-            case 1:
-            if(funct7==0x0){
-                funD=SLLI;
+            case 0x63:
+            switch(funct3){
+                case 0:
+                funD=BEQ;
+                break;
+                case 1:
+                funD=BNE;
+                break;
+                case 4:
+                funD=BLT;
+                break;
+                case 5:
+                funD=BGE;
+                break;
+                case 6:
+                funD=BLTU;
+                break;
+                case 7:
+                funD=BGEU;
+                break;
             }
             break;
-            case 5:
-            switch(funct7){
+            case 0x3:
+            switch(funct3){
                 case 0:
-                funD=SRLI;
+                funD=LB;
                 break;
-                case 0x20:
-                funD=SRAI;
+                case 1:
+                funD=LH;
                 break;
+                case 2:
+                funD=LW;
+                break;
+                case 4:
+                funD=LBU;
+                break;
+                case 5:
+                funD=LHU;
+                break;
+            }
+            break;
+            case 0x23:
+            switch(funct3){
+                case 0:
+                funD=SB;
+                break;
+                case 1:
+                funD=SH;
+                break;
+                case 2:
+                funD=SW;
+                break;
+            }
+            break;
+            case 0x13:
+            switch(funct3){
+                case 0:
+                funD=ADDI;
+                break;
+                case 2:
+                funD=SLTI;
+                break;
+                case 3:
+                funD=SLTIU;
+                break;
+                case 4:
+                funD=XORI;
+                break;
+                case 6:
+                funD=ORI;
+                break;
+                case 7:
+                funD=ANDI;
+                break;
+                case 1:
+                if(funct7==0x0){
+                    funD=SLLI;
+                }
+                break;
+                case 5:
+                switch(funct7){
+                    case 0:
+                    funD=SRLI;
+                    break;
+                    case 0x20:
+                    funD=SRAI;
+                    break;
+                }
+                break;
+            }
+            break;
+            case 0x33:
+            switch(funct3){
+                case 0:
+                switch(funct7){
+                    case 0x0:
+                    funD=ADD;
+                    break;
+                    case 0x20:
+                    funD=SUB;
+                    break;
+                }
+                break;
+                case 1:
+                if(funct7==0){
+                funD=SLL;}
+                break;
+                case 2:
+                if(funct7==0){
+                funD=SLT;}
+                break;
+                case 3:
+                if(funct7==0){
+                funD=SLTU;}
+                break;
+                case 4:
+                if(funct7==0){
+                funD=XOR;}
+                break;
+                case 5:
+                switch(funct7){
+                    case 0x0:
+                    funD=SRL;
+                    break;
+                    case 0x20:
+                    funD=SRA;
+                    break;
+                }
+                case 6:
+                if(funct7==0){
+                funD=OR;}
+                break;
+                case 7:
+                if(funct7==0){
+                funD=AND;}
+                break;
+            } 
+            break;
+            default:
+            if(comd==0x00000000){
+                funD=HALT;
             }
             break;
         }
