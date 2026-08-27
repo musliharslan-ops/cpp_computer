@@ -6,7 +6,7 @@ Yapılacaklar:
 [X] registerlara yazılacak
 
 Multicycle:
-[ ] Multicycle Mimariye karar verilecek (Şema çizilecek ya da hazır alınacak)
-[ ] Yeni modüller eklenecek (register file, memory vb.)
+[X] Multicycle Mimariye karar verilecek (Şema çizilecek ya da hazır alınacak)
+[X] Yeni modüller eklenecek (register file, memory vb.)
 [ ] Yapılacaklar listesi hazırlanacak
 [ ] Test altyapısı geliştirilecek

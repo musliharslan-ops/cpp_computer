@@ -3,39 +3,50 @@
 
 #include <iostream>
 #include <cstdint>
-#include "fetch.h"
 #include "defines.h"
 #include "memory.h"
+#include "fetch.h"
 using namespace std;
-extern uint32_t imm;
-extern uint8_t rs1;
-extern uint8_t rs2;
-extern uint64_t RD2;
-extern memory memor;
+extern memory memo;
+extern uint8_t rdW;
+extern uint64_t resultW;
+extern bool regvalid;
+extern uint8_t rdE;
+extern fetch fet;
 class decode{
 public:
     uint32_t comd;
+    uint32_t imm;
     uint8_t opcode;
     uint8_t funct3;
     uint8_t funct7;
     uint8_t rdD;
     uint64_t pcplus4D;
+    uint64_t PCD;
     uint64_t RD1D;
+    uint64_t RD2D;
     uint8_t funD;
-	void ff(){
- 		
+    uint8_t rs1;
+    uint8_t rs2;
+    int64_t immextD;
+	void ff(uint64_t a,uint64_t b,uint64_t c){
+ 		comd=a;
+        pcplus4D=b;
+        PCD=c;
+        if(regvalid==true){
+            memo.reg[rdW]=resultW;
+        }
+        memo.reg[0]=0;
 	}
-    void comb(uint32_t a,uint64_t b) {
-    comd=a;
-    pcplus4D=b;
+    void comb() {
     opcode=comd & 0x7F;
     rdD=(comd>>7)& 0x1F;
     funct3=(comd>>12)& 0x7;
     rs1=(comd>>15)& 0x1F;
     rs2=(comd>>20)& 0x1F;
     funct7=(comd>>25)& 0x07F;
-    RD1D=memor.reg[rs1];
-    RD2=memor.reg[rs2];
+    RD1D=memo.reg[rs1];
+    RD2D=memo.reg[rs2];
     switch (opcode)
     {
     case 0x33:
@@ -218,10 +229,34 @@ public:
         }
         break;
     }
+    switch(opcode){
+        case 0x13:
+        case 0x3:
+        case 0x67:  
+        case 0x23:
+        immextD=simm12_64;
+        if(funD==SLTIU){
+            immextD=uimm32_64;
+        }
+        break;
+        case 0x63:
+        immextD=simm13_64;
+        break;
+        case 0x37:
+        case 0x17:
+        immextD=simm32_64;
+        break;
+        case 0x6F:
+        immextD=simm21_64;
+        break;
     }
-    
+    if((rdE!=0)&&(rdE==rs1||rdE==rs2)){
+        
+    }
+}
 	void reset(){
-		
+        comd=0x00000013;
+        fet.reset();
 	}
 
 protected:

@@ -4,15 +4,14 @@
 #include <iostream>
 #include <fstream>
 #include <cstdint>
-#include "execute.h"
 using namespace std;
 bool jmpcon=false;
-extern bool jmpcon;
-extern uint64_t pcc;
+extern uint64_t PCTARGETE;
 class fetch{
 public:
     uint32_t comd;
     uint64_t pcplus4F;
+    uint64_t PCF;
     ifstream ins_mem;
 
     fetch() : ins_mem("imem.mem") 
@@ -20,19 +19,19 @@ public:
 
     void ff() {
         if(jmpcon==0){
-        pc+=4;
+        PCF=pcplus4F;
         }
-        else pc=pcc;    
+        else PCF=PCTARGETE;    
     }
 	void comb(){
- 		for(int i=0;i<=pc;i+=4){
+ 		for(int i=0;i<PCF;i+=4){
             ins_mem>>hex>>comd;
         }
-        pcplus4F=pc+4;
+        pcplus4F=PCF+4;
 	}
 
 	void reset(){
-		
+		comd=0x00000013;
 	}
 
 protected:
