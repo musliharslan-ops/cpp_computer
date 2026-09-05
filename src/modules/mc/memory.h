@@ -20,7 +20,7 @@ public:
     uint8_t funM;       
     void ff(uint64_t a, uint64_t b, uint64_t c, uint8_t d, uint8_t e,bool f) {
         if(memvalidM==true){
-        mem[ALURESULTM]=writedataM;
+            mem[ALURESULTM]=writedataM;
         }
         pcplus4M=a;
         writedataM=b;
@@ -28,7 +28,7 @@ public:
         rdM=d;
         funM=e;
         memvalidM=f;
-        }
+    }
     
 	void comb(){
         readdataM=mem[ALURESULTM];

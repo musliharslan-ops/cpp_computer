@@ -52,222 +52,231 @@ public:
             case BGE:
             case BLTU:
             case BGEU:
-            ALUINPUT2=RD2E;
-            break;
+                ALUINPUT2=RD2E;
+                break;
             default:
-            ALUINPUT2=immextE;
-            break;
+                ALUINPUT2=immextE;
+                break;
         }
-    PCTARGETE=PCE+immextE;
-    switch(funE){
-        case LUI:
-        ALURESULTE=immextE;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case JAL:
-        ALURESULTE=pcplus4E;
-        case AUIPC:
-        jmpcon=true;
-        memvalidE=false;
-        ::decod.reset();
-        break;
-        case JALR:
-        PCTARGETE=immextE+RD1E;
-        ALURESULTE=pcplus4E;
-        jmpcon=true;
-        memvalidE=false;
-        ::decod.reset();
-        break;
-        case BEQ:
-        if(RD1E==ALUINPUT2){
-            jmpcon=true;
-            ::decod.reset();
+        
+        PCTARGETE=PCE+immextE;
+        switch(funE){
+            case LUI:
+                ALURESULTE=immextE;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case JAL:
+                ALURESULTE=pcplus4E;
+            case AUIPC:
+                jmpcon=true;
+                memvalidE=false;
+                ::decod.reset();
+                break;
+            case JALR:
+                PCTARGETE=immextE+RD1E;
+                ALURESULTE=pcplus4E;
+                jmpcon=true;
+                memvalidE=false;
+                ::decod.reset();
+                break;
+            case BEQ:
+                if(RD1E==ALUINPUT2){
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case BNE:
+                if(!(RD1E==ALUINPUT2)){ 
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case BLT:
+                if(sregrs1_64<sregrs2_64){
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case BGE:
+                if(!(sregrs1_64<sregrs2_64)){ 
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case BLTU:
+                if(RD1E<ALUINPUT2){
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case BGEU:
+                if(!(RD1E<ALUINPUT2)){
+                    jmpcon=true;
+                    ::decod.reset();
+                } else {
+                    jmpcon=false;
+                }
+                memvalidE=false;
+                break;
+            case LB:
+            case LH:
+            case LW:
+            case LBU:
+            case LHU:
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SB:
+                writedataE=sregrs2_8;
+                jmpcon=false;
+                memvalidE=true;
+                break;
+            case SH:
+                writedataE=sregrs2_16;
+                jmpcon=false;
+                memvalidE=true;
+                break;
+            case SW:
+                writedataE=sregrs2_32;
+                jmpcon=false;
+                memvalidE=true;
+                break;
+            case ADDI:
+                ALURESULTE=RD1E+immextE;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SLTI:
+                if(sregrs1_64<immextE){
+                    ALURESULTE=1;
+                }  
+                else{ 
+                    ALURESULTE=0;
+                }
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SLTIU:
+                if(RD1E<immextE){
+                    ALURESULTE=1;
+                }
+                else{ 
+                    ALURESULTE=0;
+                }
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case XORI:
+                ALURESULTE=(immextE)^RD1E;
+                jmpcon=false;
+                memvalidE=false;
+                break;   
+            case ORI:
+                ALURESULTE=(immextE)|RD1E;
+                jmpcon=false;
+                memvalidE=false;
+                break;                
+            case ANDI:
+                ALURESULTE=(immextE)&RD1E;
+                jmpcon=false;
+                memvalidE=false;
+                break; 
+            case SLLI:
+                ALURESULTE=RD1E<<shift_amount;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SRLI:
+                ALURESULTE=static_cast<uint64_t>(RD1E>>shift_amount);
+                jmpcon=false;
+                memvalidE=false;
+                break; 
+            case SRAI:
+                ALURESULTE=static_cast<int64_t>(RD1E>>shift_amount);
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case ADD:
+                ALURESULTE=RD1E+ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SUB:
+                ALURESULTE=RD1E-ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SLL:
+                ALURESULTE=RD1E<<ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SLT:
+                if(sregrs1_64<sregrs2_64){
+                    ALURESULTE=1;
+                } else{ 
+                    ALURESULTE=0;
+                }
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SLTU:
+                if(RD1E<ALUINPUT2){
+                    ALURESULTE=1;
+                }
+                else{ 
+                    ALURESULTE=0;
+                }
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case XOR:
+                ALURESULTE=RD1E^ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SRL:
+                ALURESULTE=RD1E>>ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case SRA:
+                ALURESULTE=static_cast<int64_t>(RD1E>>ALUINPUT2);
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case OR:
+                ALURESULTE=RD1E|ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case AND:
+                ALURESULTE=RD1E&ALUINPUT2;
+                jmpcon=false;
+                memvalidE=false;
+                break;
+            case HALT:
+                run=false;
+                jmpcon=false;
+                memvalidE=false;
+                break;
         }
-        else jmpcon=false;
-        memvalidE=false;
-        break;
-        case BNE:
-        if(!(RD1E==ALUINPUT2)){ 
-            jmpcon=true;
-            ::decod.reset();
-        }
-        else jmpcon=false;
-        memvalidE=false;
-        break;
-        case BLT:
-        if(sregrs1_64<sregrs2_64){
-            jmpcon=true;
-            ::decod.reset();
-        }  
-        else jmpcon=false;
-        memvalidE=false;
-        break;
-        case BGE:
-        if(!(sregrs1_64<sregrs2_64)){ 
-            jmpcon=true;
-            ::decod.reset();
-        }  
-        else jmpcon=false;
-        memvalidE=false;
-        break;
-        case BLTU:
-        if(RD1E<ALUINPUT2){
-            jmpcon=true;
-            ::decod.reset();
-        }else jmpcon=false;
-        memvalidE=false;
-        break;
-        case BGEU:
-        if(!(RD1E<ALUINPUT2)){
-            jmpcon=true;
-            ::decod.reset();
-        }else jmpcon=false;
-        memvalidE=false;
-        break;
-        case LB:
-        case LH:
-        case LW:
-        case LBU:
-        case LHU:
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SB:
-        writedataE=sregrs2_8;
-        jmpcon=false;
-        memvalidE=true;
-        break;
-        case SH:
-        writedataE=sregrs2_16;
-        jmpcon=false;
-        memvalidE=true;
-        break;
-        case SW:
-        writedataE=sregrs2_32;
-        jmpcon=false;
-        memvalidE=true;
-        break;
-        case ADDI:
-        ALURESULTE=RD1E+immextE;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SLTI:
-        if(sregrs1_64<immextE){
-            ALURESULTE=1;
-        }  
-        else{ 
-        ALURESULTE=0;
-        }jmpcon=false;
-        memvalidE=false;
-        break;
-        case SLTIU:
-        if(RD1E<immextE){
-            ALURESULTE=1;
-        }
-        else{ 
-        ALURESULTE=0;
-        }
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case XORI:
-        ALURESULTE=(immextE)^RD1E;
-        jmpcon=false;
-        memvalidE=false;
-        break;   
-        case ORI:
-        ALURESULTE=(immextE)|RD1E;
-        jmpcon=false;
-        memvalidE=false;
-        break;                
-        case ANDI:
-        ALURESULTE=(immextE)&RD1E;
-        jmpcon=false;
-        memvalidE=false;
-        break; 
-        case SLLI:
-        ALURESULTE=RD1E<<shift_amount;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SRLI:
-        ALURESULTE=static_cast<uint64_t>(RD1E>>shift_amount);
-        jmpcon=false;
-        memvalidE=false;
-        break; 
-        case SRAI:
-        ALURESULTE=static_cast<int64_t>(RD1E>>shift_amount);
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case ADD:
-        ALURESULTE=RD1E+ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SUB:
-        ALURESULTE=RD1E-ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SLL:
-        ALURESULTE=RD1E<<ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SLT:
-        if(sregrs1_64<sregrs2_64){
-            ALURESULTE=1;
-        }
-        else{ 
-        ALURESULTE=0;
-        }
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SLTU:
-        if(RD1E<ALUINPUT2){
-            ALURESULTE=1;
-        }
-        else{ 
-        ALURESULTE=0;
-        }
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case XOR:
-        ALURESULTE=RD1E^ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SRL:
-        ALURESULTE=RD1E>>ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case SRA:
-        ALURESULTE=static_cast<int64_t>(RD1E>>ALUINPUT2);
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case OR:
-        ALURESULTE=RD1E|ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case AND:
-        ALURESULTE=RD1E&ALUINPUT2;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-        case HALT:
-        run=false;
-        jmpcon=false;
-        memvalidE=false;
-        break;
-    }
     }
 
 	void reset(){

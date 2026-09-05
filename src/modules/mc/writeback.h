@@ -30,25 +30,25 @@ public:
 			case BGE:
 			case BLTU:
 			case BGEU:
-			regvalid=false;
-			break;
+				regvalid=false;
+				break;
 			case LB:
 			case LH:
 			case LW:
 			case LBU:
 			case LHU:
-			resultW=readdataW;
-			regvalid=true;
-			break;
+				resultW=readdataW;
+				regvalid=true;
+				break;
 			case JAL:
 			case JALR:
-			resultW=pcplus4W;
-			regvalid=true;
-			break;
+				resultW=pcplus4W;
+				regvalid=true;
+				break;
 			default:
-			resultW=ALURESULTW;
-			regvalid=true;
-			break;
+				resultW=ALURESULTW;
+				regvalid=true;
+				break;
 		}
 	}
 
